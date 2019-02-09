@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dingi Map</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'map/vlgna.css' %}">
+</head>
+<body>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    {% block google_map %} {% endblock %}
+
+    {% comment %}
+     <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+
+    <script src="{% static 'map/maps.js' %}"> </script>
+
+    <div class = "container-fluid" id="googleMaps"></div>
+    {% endcomment %}
+    <div class = "container-fluid" id="googleMaps"></div>
+
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="color: antiquewhite">&times;</a>
+
+
+        <div class="dropdown" onmouseover="openEmergency()" onmouseleave="closeEmergency()" >
+            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Emergency" id="emergency"  style="color: antiquewhite;">
+                Emergency
+            </a>
+
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Hospital</a>
+                <a class="dropdown-item" href="#">Fire Service</a>
+                <a class="dropdown-item" href="#">Police</a>
+                <a class="dropdown-item" href="#">National Call Center</a>
+            </div>
+        </div>
+        <div class="dropdown" onmouseover="openRoute()" onmouseleave="closeRoute()">
+            <a class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Route" id="route" onclick="openRoute()" style="color: antiquewhite;">
+                Route
+            </a>
+
+            <div class="dropdown-menu">
+                <form id="routeForm">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="presentLocation" placeholder="Your Current Location">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="destination" placeholder="Where You Want to Go?">
+                    </div>
+
+                    <button type="submit" class="btn-lg btn-primary btn-block">Drive</button>
+                    <button type="submit" class="btn-lg btn-primary btn-block">Walk</button>
+                    <button type="submit" class="btn-lg btn-primary btn-block">City Bus</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="dropdown" onmouseover="openInterCity()" onmouseleave="closeInterCity()">
+            <a class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Inter City" id="interCity" onclick="openInterCity()" onmouseleave="closeEmergency()" style="color: antiquewhite">
+                Inter City
+            </a>
+
+            <div class="dropdown-menu">
+                <form id="interCityForm">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="presentLocationCity" placeholder="Your Current Location">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="destinationCity" placeholder="Where You Want to Go?">
+                    </div>
+
+                    <button type="submit" class="btn-lg btn-primary btn-block">Train</button>
+                    <button type="submit" class="btn-lg btn-primary btn-block">Bus</button>
+
+                </form>
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+    <nav class="navbar navbar-expand-md bg-info navbar-light sticky-top">
+
+
+        <span onclick="openNav()" id="spanBar" style="color: black">&#9776;</span>
+
+        <a class="navbar-brand" href="{% url "map:home_view" %}">Dingi Map</a>
+
+        <div class="collapse navbar-collapse">
+            <form  action="#" >
+                <input type="search" class="form-control" id="searchbar"  placeholder="Search for Address..">
+            </form>
+        </div>
+
+
+        <div class="dropdown ">
+            <a class=" dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="nearBy" style="color: antiquewhite;">
+                NearBy
+            </a>
+            <div class="dropdown-menu ">
+                <a class="dropdown-item" href="#">City Bus</a>
+                <a class="dropdown-item" href= "{% url "map:restaurant_view" %}" >Restaurant</a>
+                <a class="dropdown-item" href="{% url "map:shopping_mall_view" %}">Shopping Mall</a>
+                <a class="dropdown-item" href="#">Petrol Pump</a>
+                <a class="dropdown-item" href="#">ATM</a>
+                <a class="dropdown-item" href="#">Pharmacy</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <a class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="services" style="color: antiquewhite;">
+                Services
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Electricity</a>
+                <a class="dropdown-item" href="#">Water</a>
+                <a class="dropdown-item" href="#">AC/Fridge</a>
+                <a class="dropdown-item" href="#">Furniture</a>
+                <a class="dropdown-item" href="#">Gas</a>
+                <a class="dropdown-item" href="#">Sanitary</a>
+                <a class="dropdown-item" href="#">King</a>
+                <a class="dropdown-item" href="#">Loki</a>
+                <a class="dropdown-item" href="#">Broker</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <a class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="markets" style="color: antiquewhite;">
+                Markets
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Link 1</a>
+                <a class="dropdown-item" href="#">Link 2</a>
+            </div>
+        </div>
+
+
+
+
+
+
+
+    </nav>
+
+ {% block content %}
+    {% endblock %}
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
